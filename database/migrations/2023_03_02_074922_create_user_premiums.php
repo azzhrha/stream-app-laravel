@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('user_premiums', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('phone_number');
-            $table->string('avatar')->nullable();
-            $table->enum('role', ['admin', 'member']);
+            $table->foreignId('package_id')->constrained('packages');
+            $table->foreignId('user_id')->constrained('users');
+            $table->date('end_of_subscription');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('user_premiums');
     }
 };
